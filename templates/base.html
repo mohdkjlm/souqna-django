@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}سوقنا{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+<header class="navbar">
+    <a class="logo" href="{% url 'home' %}">سوقنا</a>
+    <nav>
+        <a href="{% url 'home' %}">الرئيسية</a>
+        <a href="{% url 'products' %}">المنتجات</a>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'add_product' %}">إضافة منتج</a>
+            <a href="{% url 'my_products' %}">منتجاتي</a>
+            <a href="{% url 'profile' %}">حسابي</a>
+            <a class="outline-link" href="{% url 'accounts:logout' %}">تسجيل الخروج</a>
+        {% else %}
+            <a href="{% url 'login' %}">تسجيل الدخول</a>
+            <a class="primary-link" href="{% url 'accounts:signup' %}">إنشاء حساب</a>
+        {% endif %}
+    </nav>
+</header>
+
+<main>
+    {% block content %}{% endblock %}
+</main>
+
+<footer>
+    <div>
+        <strong>سوقنا</strong>
+        <p>سوق بسيط لبيع وتبديل السلع في غزة.</p>
+    </div>
+    <p>جميع الحقوق محفوظة - سوقنا 2026</p>
+</footer>
+</body>
+</html>

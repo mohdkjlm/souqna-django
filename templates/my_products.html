@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}منتجاتي | سوقنا{% endblock %}
+{% block content %}
+<section class="container page-space">
+    <div class="section-head">
+        <div>
+            <span class="eyebrow dark">إدارة المنتجات</span>
+            <h1>منتجاتي</h1>
+        </div>
+        <a class="btn primary" href=" {% url 'add_product' %}">إضافة منتج</a>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <div class="product-media">
+                {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}<div class="image-placeholder">صورة المنتج</div>{% endif %}
+            </div>
+            <div class="product-body">
+                <h3>{{ product.name }}</h3>
+                <p class="muted">{{ product.location }}</p>
+                {% if product.price %}<p class="price">{{ product.price }} ₪</p>
+                {% else %}<p class="price">للتبديل</p>{% endif %}
+                <div class="card-actions">
+                    <a class="btn secondary" href="{% url 'product_detail' product.id %}">عرض</a>
+                    <a class="btn ghost" href="{% url 'edit_product' product.id%}">تعديل</a>
+                    <form method="POST" action="{% url 'delete_product' product.id %}">
+                        {% csrf_token %}
+                        <button class="btn danger" type="submit">حذف</button>
+                    </form>
+                </div>
+            </div>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            {% for product in products %}
+            {{product.category}}
+            {{product.image}}
+            {{product.image.url}}
+            {{product.location}}
+            {{product.name}}
+            {{product.price}}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

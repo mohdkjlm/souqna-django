@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}حسابي | سوقنا{% endblock %}
+{% block content %}
+<section class="container page-space">
+    <div class="profile-hero">
+        <div>
+            <span class="eyebrow">حسابي</span>
+            <h1>أهلاً {{ request.user.username }}</h1>
+            <p>من هنا يمكنك إدارة حسابك ومنتجاتك.</p>
+        </div>
+        <a class="btn light" href="{% url 'edit_profile' %}">تعديل الملف الشخصي</a>
+    </div>
+
+    <div class="dashboard-grid">
+        <a class="dashboard-card featured" href="{% url 'add_product' %}">
+            <span>01</span><h3>إضافة منتج</h3><p>أضف سلعة جديدة للبيع أو التبديل.</p>
+        </a>
+        <a class="dashboard-card" href="{% url 'my_products' %}">
+            <span>02</span><h3>منتجاتي</h3><p>عرض وتعديل وحذف المنتجات الخاصة بك.</p>
+        </a>
+        <a class="dashboard-card" href="{% url 'my_self' %}">
+            <div class="dashboard-card">
+                <span>03</span><h3>معلومات الحساب</h3>
+                <p>{{ request.user.username }}</p>
+                <p>{{ request.user.email }}</p>
+            </div>
+        </a>
+    </div>
+</section>
+{% endblock %}

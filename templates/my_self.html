@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}
+معلومات الحساب | سوقنا
+{% endblock %}
+
+{% block content %}
+
+<section class="container page-space narrow">
+
+    <div class="page-title">
+        <span class="eyebrow dark">حسابي</span>
+        <h1>معلومات الحساب</h1>
+        <p>بيانات حسابك الشخصية.</p>
+    </div>
+
+    <div class="panel">
+
+        <div class="form">
+
+            <div>
+                <label>اسم المستخدم</label>
+                <p>{{ myself.username }}</p>
+            </div>
+
+            <div>
+                <label>البريد الإلكتروني</label>
+                <p>{{ myself.email }}</p>
+            </div>
+
+            <div>
+                <label>الاسم الأول</label>
+                <p>{{ myself.first_name|default:"غير مضاف" }}</p>
+            </div>
+
+            <div>
+                <label>اسم العائلة</label>
+                <p>{{ myself.last_name|default:"غير مضاف" }}</p>
+            </div>
+
+        </div>
+
+        <a class="btn ghost" href="{% url 'profile' %}">
+            رجوع
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}

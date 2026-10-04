@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block title %}
+كل المنتجات | سوقنا
+{% endblock %}
+
+{% block content %}
+
+<section class="products-page">
+
+    <div class="products-heading">
+        <div>
+            <span class="eyebrow">السوق</span>
+            <h1>كل المنتجات</h1>
+            <p>تصفح المنتجات المعروضة في سوقنا واختر ما يناسبك.</p>
+        </div>
+    </div>
+
+
+    <!-- البحث والفلاتر -->
+    <section class="products-filters">
+
+        <form class="products-filter-form"
+              action="{% url 'search' %}"
+              method="GET">
+
+            <div class="search-box">
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="ابحث عن اسم المنتج..."
+                >
+            </div>
+
+            <div class="filter-box">
+                <select name="category">
+                    <option value="">كل التصنيفات</option>
+                    <option value="electronics">إلكترونيات</option>
+                    <option value="books">كتب</option>
+                    <option value="games">ألعاب</option>
+                    <option value="cars">سيارات</option>
+                </select>
+            </div>
+
+            <div class="filter-box">
+                <input
+                    type="number"
+                    name="min_price"
+                    placeholder="السعر من"
+                >
+            </div>
+
+            <div class="filter-box">
+                <input
+                    type="number"
+                    name="max_price"
+                    placeholder="السعر إلى"
+                >
+            </div>
+
+            <button type="submit" class="btn primary">
+                بحث
+            </button>
+
+        </form>
+
+    </section>
+
+
+    <!-- المنتجات -->
+    <section class="products-grid">
+
+        {% for product in products %}
+
+        <a href="{% url 'product_detail' product.id %}"
+           class="product-card">
+
+            <div class="product-image">
+
+                {% if product.image %}
+                    <img
+                        src="{{ product.image.url }}"
+                        alt="{{ product.name }}"
+                    >
+                {% endif %}
+
+                <span class="product-category">
+                    {{ product.category }}
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>{{ product.name }}</h3>
+
+                <div class="product-meta">
+                    <span>{{ product.location }}</span>
+                </div>
+
+                <strong class="product-price">
+                    {{ product.price }} ₪
+                </strong>
+
+            </div>
+
+        </a>
+
+        {% empty %}
+
+        <div class="empty-products">
+            <h3>لا توجد منتجات حالياً</h3>
+            <p>لم يتم إضافة أي منتجات بعد.</p>
+        </div>
+
+        {% endfor %}
+
+    </section>
+
+
+    <!-- ترقيم الصفحات -->
+    {% if products.has_other_pages %}
+
+    <div class="pagination">
+
+        {% if products.has_previous %}
+            <a href="?page={{ products.previous_page_number }}">‹</a>
+        {% endif %}
+
+
+        {% for num in products.paginator.page_range %}
+
+            {% if products.number == num %}
+
+                <span class="active">
+                    {{ num }}
+                </span>
+
+            {% else %}
+
+                <a href="?page={{ num }}">
+                    {{ num }}
+                </a>
+
+            {% endif %}
+
+        {% endfor %}
+
+
+        {% if products.has_next %}
+            <a href="?page={{ products.next_page_number }}">›</a>
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</section>
+
+{% endblock %}

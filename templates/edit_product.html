@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block title %}تعديل المنتج | سوقنا{% endblock %}
+{% block content %}
+<section class="container page-space narrow">
+    <div class="page-title">
+        <span class="eyebrow dark">إدارة المنتج</span>
+        <h1>تعديل المنتج</h1>
+        <p>عدّل البيانات ثم احفظ التغييرات.</p>
+    </div>
+    <div class="panel">
+        <form method="POST" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn primary" type="submit">حفظ التعديلات</button>
+            <a class="btn ghost" href="{% url 'my_products' %}">إلغاء</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

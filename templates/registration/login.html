@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}تسجيل الدخول | سوقنا{% endblock %}
+{% block content %}
+<section class="auth-wrap">
+    <div class="auth-card">
+        <span class="eyebrow dark">مرحباً بعودتك</span>
+        <h1>تسجيل الدخول</h1>
+        <p class="muted">ادخل إلى حسابك لإدارة منتجاتك.</p>
+        <form method="POST" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button class="btn primary full" type="submit">تسجيل الدخول</button>
+        </form>
+        <p class="form-note">ليس لديك حساب؟ <a href="{% url 'accounts:signup' %}">إنشاء حساب</a></p>
+    </div>
+</section>
+{% endblock %}

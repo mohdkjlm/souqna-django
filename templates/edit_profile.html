@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+تعديل الحساب | سوقنا
+{% endblock %}
+
+{% block content %}
+
+<section class="container page-space narrow">
+
+    <div class="page-title">
+        <span class="eyebrow dark">حسابي</span>
+        <h1>تعديل معلومات الحساب</h1>
+        <p>عدّل بيانات حسابك ثم احفظ التغييرات.</p>
+    </div>
+
+    <div class="panel">
+
+        <form method="POST" class="form">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <div class="card-actions">
+                <button class="btn primary" type="submit">
+                    حفظ التعديلات
+                </button>
+
+                <a class="btn ghost" href="{% url 'my_self' %}">
+                    إلغاء
+                </a>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

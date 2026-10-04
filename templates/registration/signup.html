@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}إنشاء حساب | سوقنا{% endblock %}
+
+{% block content %}
+
+<section class="auth-wrap">
+    <div class="auth-card wide">
+
+        <span class="eyebrow dark">ابدأ الآن</span>
+
+        <h1>إنشاء حساب</h1>
+
+        <p class="muted">
+            أنشئ حسابك لتتمكن من إضافة المنتجات وإدارتها.
+        </p>
+
+        <form method="POST" class="form">
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button class="btn primary full" type="submit">
+                إنشاء الحساب
+            </button>
+        </form>
+
+        <p class="form-note">
+            لديك حساب؟
+            <a href="{% url 'login' %}">تسجيل الدخول</a>
+        </p>
+
+    </div>
+</section>
+
+{% endblock %}

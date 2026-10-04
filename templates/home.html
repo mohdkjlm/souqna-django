@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block title %}الرئيسية | سوقنا{% endblock %}
+{% block content %}
+<section class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">سوق محلي بسيط وآمن</span>
+        <h1>بيع، اشتري أو بدّل ما تحتاجه</h1>
+        <p>اعرض سلعتك وتواصل مع المهتمين بسهولة داخل قطاع غزة.</p>
+        <form class="search-bar" action="{% url 'search' %}" method="GET">
+        <input type="text" name="search" placeholder="ابحث عن سلعة">
+        <button type="submit">بحث</button>
+        </form>
+    </div>
+</section>
+
+<section class="container">
+    <div class="section-head">
+        <div>
+            <span class="eyebrow dark">التصنيفات</span>
+            <h2>تصفح حسب التصنيف</h2>
+        </div>
+    </div>
+    <div class="categories">
+        <a href="{% url 'products' %}">الكل</a>
+        <a href="{% url 'category_products' 'electronics' %}">إلكترونيات</a>
+        <a href="{% url 'category_products' 'cars' %}">سيارات</a>
+        <a href="{% url 'category_products' 'games' %}">ألعاب</a>
+        <a href="{% url 'category_products' 'books' %}">كتب</a>
+    </div>
+
+    <div class="section-head">
+        <div>
+            <span class="eyebrow dark">المضاف حديثاً</span>
+            <h2>أحدث المنتجات</h2>
+        </div>
+    </div>
+
+    <div class="product-grid">
+        {% for product in products %}
+        <article class="product-card">
+            <div class="product-media">
+                {% if product.image %}
+                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
+                {% else %}
+                    <div class="image-placeholder">صورة المنتج</div>
+                {% endif %}
+                <span class="badge">{{ product.category }}</span>
+            </div>
+            <div class="product-body">
+                <h3>{{ product.name }}</h3>
+                <p class="muted">{{ product.location }}</p>
+                {% if product.price %}
+                    <p class="price">{{ product.price }} ₪</p>
+                {% else %}
+                    <p class="price">للتبديل</p>
+                {% endif %}
+                <a class="btn secondary" href="{% url 'product_detail' product.id %}">عرض التفاصيل</a>
+            </div>
+        </article>
+        {% empty %}
+        <div class="empty-state">
+            {% for product in products %}
+                {{ product.name }}
+                {{ product.price }}
+                {{ product.category }}
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

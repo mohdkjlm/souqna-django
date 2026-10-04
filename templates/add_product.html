@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}إضافة منتج | سوقنا{% endblock %}
+{% block content %}
+<section class="container page-space narrow">
+    <div class="page-title">
+        <span class="eyebrow dark">منتج جديد</span>
+        <h1>إضافة منتج</h1>
+        <p>أدخل بيانات السلعة التي تريد عرضها.</p>
+    </div>
+    <div class="panel">
+        <form method="POST" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            
+            <a  href="{% url 'home' %}">
+                <button class="btn primary" type="submit">إضافة المنتج</button>
+            </a>
+            <a class="btn ghost" href="{% url 'home' %}">إلغاء</a>
+        </form>
+    </div>
+</section>
+{% endblock %}

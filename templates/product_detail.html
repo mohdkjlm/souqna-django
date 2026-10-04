@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block title %}{{ product.name }} | سوقنا{% endblock %}
+{% block content %}
+<section class="container page-space">
+    <div class="detail-layout">
+        <div class="detail-image">
+            {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">
+            {% else %}<div class="image-placeholder large">صورة المنتج</div>{% endif %}
+        </div>
+        <div class="detail-content">
+            <span class="badge inline">{{ product.category }}</span>
+            <h1>{{ product.name }}</h1>
+            <p class="muted">الموقع: {{ product.location }}</p>
+            {% if product.price %}<p class="detail-price">{{ product.price }} ₪</p>
+            {% else %}<p class="detail-price">للتبديل</p>{% endif %}
+            <div class="description">
+                <h3>وصف المنتج</h3>
+                <p>{{ product.description }}</p>
+            </div>
+            <div class="seller-box">
+                <span>صاحب الإعلان</span>
+                <strong>{{ product.owner.username }}</strong>
+            </div>
+            {% if request.user == product.owner %}
+                <a class="btn primary" href="{% url 'edit_product' product.id %}">تعديل المنتج</a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+{% endblock %}
