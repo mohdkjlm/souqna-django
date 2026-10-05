@@ -21,8 +21,8 @@
     <section class="products-filters">
 
         <form class="products-filter-form"
-              action="{% url 'search' %}"
-              method="GET">
+            action="{% url 'search' %}"
+            method="GET">
 
             <div class="search-box">
                 <input
@@ -73,17 +73,17 @@
         {% for product in products %}
 
         <a href="{% url 'product_detail' product.id %}"
-           class="product-card">
+        class="product-card">
 
             <div class="product-image">
-
-                {% if product.image %}
-                    <img
-                        src="{{ product.image.url }}"
-                        alt="{{ product.name }}"
-                    >
-                {% endif %}
-
+                {% with first_image=product.images.first %}
+                    {% if first_image %}
+                        <img
+                            src="{{ first_image.image.url }}"
+                            alt="{{ product.name }}"
+                        >
+                    {% endif %}
+                {% endwith %}
                 <span class="product-category">
                     {{ product.category }}
                 </span>
@@ -99,7 +99,7 @@
                 </div>
 
                 <strong class="product-price">
-                    {{ product.price }} ₪
+                    {{ product.price }} $
                 </strong>
 
             </div>

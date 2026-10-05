@@ -39,11 +39,14 @@
         {% for product in products %}
         <article class="product-card">
             <div class="product-media">
-                {% if product.image %}
-                    <img src="{{ product.image.url }}" alt="{{ product.name }}">
-                {% else %}
+                {% with first_image=product.images.first %}
+                    {% if first_image %}
+                        <img src="{{ first_image.image.url }}"
+                        alt="{{ product.name }}">
+                    {% else %}
                     <div class="image-placeholder">صورة المنتج</div>
-                {% endif %}
+                    {% endif %}
+                {% endwith %}
                 <span class="badge">{{ product.category }}</span>
             </div>
             <div class="product-body">

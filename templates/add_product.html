@@ -11,7 +11,7 @@
         <form method="POST" enctype="multipart/form-data" class="form">
             {% csrf_token %}
             {{ form.as_p }}
-            
+            <input type = 'file' name = 'images' multiple>
             <a  href="{% url 'home' %}">
                 <button class="btn primary" type="submit">إضافة المنتج</button>
             </a>

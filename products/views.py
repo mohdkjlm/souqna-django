@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Product
+from .models import Product, ProductImage
 from .forms import ProductForm
 from account.models import Profils
 from account.forms import UserForm
@@ -24,16 +24,19 @@ def profile(requesr):
 @permission_required("products.add_product")
 def add_product(request):
     if request.method == "POST":
-        form = ProductForm(request.POST, request.FILES)
+        images = request.FILES.getlist("images")
+        form = ProductForm(request.POST)
         if form.is_valid():
             name = form.cleaned_data["name"]
             if Product.objects.filter(name__iexact=name, owner=request.user).exists():
                 form.add_error("name", "هذا المنتج موجود لديك مسبقاً")
-        else:
-            product = form.save(commit=False)
-            product.owner = request.user
-            product.save()
-            return redirect("products")
+            else:
+                product = form.save(commit=False)
+                product.owner = request.user
+                product.save()
+                for image in images:
+                    ProductImage.objects.create(product=product, image=image)
+                return redirect("products")
     else:
         form = ProductForm()
     return render(request, "add_product.html", {"form": form})
@@ -48,7 +51,21 @@ def my_products(requesr):
 
 def product_detail(request, id):
     product = Product.objects.get(id=id)
-    return render(request, "product_detail.html", {"product": product})
+    product_image = ProductImage.objects.filter(product=product)
+    related_products = Product.objects.filter(category=product.category).exclude(
+        id=product.id
+    )[0:4]
+    recommended_products = Product.objects.exclude(id=product.id)[0:12]
+    return render(
+        request,
+        "product_detail.html",
+        {
+            "product": product,
+            "product_image": product_image,
+            "related_products": related_products,
+            "recommended_products": recommended_products,
+        },
+    )
 
 
 @login_required
